@@ -241,14 +241,14 @@ export default function Home() {
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {[
-                { value: stats.totalProducts, label: "Prodotti", suffix: "", accent: false },
-                { value: stats.totalCategories, label: "Categorie", suffix: "", accent: false },
-                { value: stats.totalKeysSold, label: "Chiavi Consegnate", suffix: "+", accent: true },
-                { value: stats.satisfiedCustomers, label: "Clienti Soddisfatti", suffix: "+", accent: false },
+                { value: stats.totalProducts ?? 0, label: "Prodotti", suffix: "", accent: false },
+                { value: stats.totalCategories ?? 0, label: "Categorie", suffix: "", accent: false },
+                { value: stats.totalKeysSold ?? 0, label: "Chiavi Consegnate", suffix: "+", accent: true },
+                { value: stats.satisfiedCustomers ?? 0, label: "Clienti Soddisfatti", suffix: "+", accent: false },
               ].map(({ value, label, suffix, accent }) => (
                 <div key={label} className="flex flex-col gap-1">
                   <span className={`text-3xl md:text-5xl font-black tracking-tight ${accent ? "text-[#c6f135]" : "text-white"}`}>
-                    {value.toLocaleString()}{suffix}
+                    {(value ?? 0).toLocaleString()}{suffix}
                   </span>
                   <span className="text-[10px] md:text-xs font-semibold uppercase tracking-widest text-white/35">{label}</span>
                 </div>
