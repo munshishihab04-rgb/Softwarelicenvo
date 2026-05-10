@@ -8,7 +8,8 @@ export default function CategoryPage() {
   const [, params] = useRoute("/category/:slug");
   const slug = params?.slug;
 
-  const { data: categories, isLoading: loadingCat } = useListCategories();
+  const { data: categoriesData, isLoading: loadingCat } = useListCategories();
+  const categories = Array.isArray(categoriesData) ? categoriesData : [];
   const category = categories?.find(c => c.slug === slug);
 
   const { data: products, isLoading } = useListProducts({ 

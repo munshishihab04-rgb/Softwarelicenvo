@@ -92,10 +92,14 @@ function CarouselCard({ children }: { children: React.ReactNode }) {
 }
 
 export default function Home() {
-  const { data: featured, isLoading: loadingFeatured } = useGetFeaturedProducts();
-  const { data: deals, isLoading: loadingDeals } = useGetDealsProducts();
-  const { data: categories, isLoading: loadingCategories } = useListCategories();
+  const { data: featuredData, isLoading: loadingFeatured } = useGetFeaturedProducts();
+  const { data: dealsData, isLoading: loadingDeals } = useGetDealsProducts();
+  const { data: categoriesData, isLoading: loadingCategories } = useListCategories();
   const { data: stats } = useGetStoreStats();
+  
+  const featured = Array.isArray(featuredData) ? featuredData : [];
+  const deals = Array.isArray(dealsData) ? dealsData : [];
+  const categories = Array.isArray(categoriesData) ? categoriesData : [];
 
   return (
     <div className="flex flex-col w-full bg-[#050505]">

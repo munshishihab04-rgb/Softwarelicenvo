@@ -22,7 +22,8 @@ export default function Products() {
   );
   const [onSale, setOnSale] = useState(searchParams.get("onSale") === "true");
 
-  const { data: categories } = useListCategories();
+  const { data: categoriesData } = useListCategories();
+  const categories = Array.isArray(categoriesData) ? categoriesData : [];
   
   const queryParams = {
     search: search || null,

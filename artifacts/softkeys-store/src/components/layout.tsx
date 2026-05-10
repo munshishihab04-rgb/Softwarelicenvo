@@ -10,7 +10,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [, setLocation] = useLocation();
   const [search, setSearch] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: categories = [] } = useListCategories();
+  const { data: categoriesData } = useListCategories();
+  const categories = Array.isArray(categoriesData) ? categoriesData : [];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
