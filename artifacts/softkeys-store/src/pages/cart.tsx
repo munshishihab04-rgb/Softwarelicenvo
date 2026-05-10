@@ -18,13 +18,13 @@ export default function CartPage() {
           <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-6">
             <ShoppingCart className="w-10 h-10 text-muted-foreground" />
           </div>
-          <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
+          <h1 className="text-3xl font-bold mb-4">Il Carrello è Vuoto</h1>
           <p className="text-muted-foreground text-lg mb-8">
-            Looks like you haven't added any products to your cart yet.
+            Non hai ancora aggiunto nessun prodotto al carrello.
           </p>
           <Link href="/products">
             <Button size="lg" className="h-12 px-8 font-bold">
-              Start Shopping
+              Inizia lo Shopping
             </Button>
           </Link>
         </div>
@@ -34,16 +34,16 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-extrabold tracking-tight mb-8">Shopping Cart</h1>
+      <h1 className="text-3xl font-extrabold tracking-tight mb-8">Carrello</h1>
       
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-card border border-border rounded-xl overflow-hidden">
             <div className="hidden md:grid grid-cols-12 gap-4 p-4 border-b border-border bg-muted/30 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-              <div className="col-span-6">Product</div>
-              <div className="col-span-2 text-center">Price</div>
-              <div className="col-span-2 text-center">Quantity</div>
-              <div className="col-span-2 text-right">Total</div>
+              <div className="col-span-6">Prodotto</div>
+              <div className="col-span-2 text-center">Prezzo</div>
+              <div className="col-span-2 text-center">Quantità</div>
+              <div className="col-span-2 text-right">Totale</div>
             </div>
             
             <div className="divide-y divide-border">
@@ -68,11 +68,11 @@ export default function CartPage() {
                   </div>
                   
                   <div className="col-span-1 md:col-span-2 text-center hidden md:block font-medium">
-                    ${item.product.price.toFixed(2)}
+                    €{item.product.price.toFixed(2)}
                   </div>
                   
                   <div className="col-span-1 md:col-span-2 flex justify-between md:justify-center items-center mt-4 md:mt-0">
-                    <div className="md:hidden font-medium">${item.product.price.toFixed(2)}</div>
+                    <div className="md:hidden font-medium">€{item.product.price.toFixed(2)}</div>
                     <div className="flex items-center gap-1 bg-background rounded-md border border-border">
                       <Button variant="ghost" size="icon" className="h-8 w-8 rounded-none" onClick={() => updateQuantity(item.product.id, item.quantity - 1)}>
                         <Minus className="w-3 h-3" />
@@ -86,10 +86,10 @@ export default function CartPage() {
                   
                   <div className="col-span-1 md:col-span-2 flex justify-between md:justify-end items-center mt-2 md:mt-0">
                     <Button variant="ghost" size="sm" className="md:hidden text-destructive" onClick={() => removeItem(item.product.id)}>
-                      Remove
+                      Rimuovi
                     </Button>
                     <div className="flex items-center gap-4">
-                      <span className="font-bold text-primary">${(item.product.price * item.quantity).toFixed(2)}</span>
+                      <span className="font-bold text-primary">€{(item.product.price * item.quantity).toFixed(2)}</span>
                       <Button variant="ghost" size="icon" className="hidden md:flex text-muted-foreground hover:text-destructive h-8 w-8" onClick={() => removeItem(item.product.id)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
@@ -103,40 +103,40 @@ export default function CartPage() {
 
         <div className="lg:col-span-1">
           <div className="bg-card border border-border rounded-xl p-6 sticky top-24">
-            <h2 className="text-xl font-bold mb-6">Order Summary</h2>
+            <h2 className="text-xl font-bold mb-6">Riepilogo Ordine</h2>
             
             <div className="space-y-4 mb-6">
               <div className="flex justify-between text-muted-foreground">
-                <span>Subtotal</span>
-                <span>${total.toFixed(2)}</span>
+                <span>Subtotale</span>
+                <span>€{total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span>Tax</span>
-                <span>Calculated at checkout</span>
+                <span>IVA</span>
+                <span>Calcolata al checkout</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span>Delivery</span>
-                <span className="text-primary font-medium">Free / Instant</span>
+                <span>Spedizione</span>
+                <span className="text-primary font-medium">Gratis / Istantanea</span>
               </div>
               
               <Separator className="my-4" />
               
               <div className="flex justify-between items-center text-xl font-extrabold">
-                <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>Totale</span>
+                <span>€{total.toFixed(2)}</span>
               </div>
             </div>
 
             <div className="mb-6">
-              <label className="text-sm font-medium mb-2 block">Promo Code</label>
+              <label className="text-sm font-medium mb-2 block">Codice Promozionale</label>
               <div className="flex gap-2">
                 <Input 
-                  placeholder="Enter code" 
+                  placeholder="Inserisci codice" 
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                   className="bg-background"
                 />
-                <Button variant="secondary" onClick={() => {}}>Apply</Button>
+                <Button variant="secondary" onClick={() => {}}>Applica</Button>
               </div>
             </div>
 
@@ -145,7 +145,7 @@ export default function CartPage() {
               className="w-full h-14 text-lg font-bold"
               onClick={() => setLocation("/checkout")}
             >
-              Proceed to Checkout
+              Procedi al Checkout
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </div>

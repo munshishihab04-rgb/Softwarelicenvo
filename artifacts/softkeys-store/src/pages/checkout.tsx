@@ -15,8 +15,8 @@ import { useToast } from "@/hooks/use-toast";
 import { OrderInputPaymentMethod } from "@workspace/api-client-react";
 
 const checkoutSchema = z.object({
-  customerName: z.string().min(2, "Name is required"),
-  customerEmail: z.string().email("Valid email is required"),
+  customerName: z.string().min(2, "Il nome è obbligatorio"),
+  customerEmail: z.string().email("Inserisci un'email valida"),
   paymentMethod: z.enum([OrderInputPaymentMethod.card, OrderInputPaymentMethod.paypal, OrderInputPaymentMethod.crypto]),
   couponCode: z.string().optional(),
 });
@@ -62,8 +62,8 @@ export default function CheckoutPage() {
       },
       onError: (error) => {
         toast({
-          title: "Checkout failed",
-          description: error.error || "Something went wrong during checkout.",
+          title: "Checkout fallito",
+          description: error.error || "Si è verificato un errore durante il checkout.",
           variant: "destructive",
         });
       }
@@ -78,11 +78,11 @@ export default function CheckoutPage() {
         <div className="lg:col-span-7">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* Contact Info */}
+              {/* Dati di Contatto */}
               <div className="bg-card border border-border rounded-xl p-6">
                 <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
                   <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm">1</span>
-                  Contact Information
+                  Dati di Contatto
                 </h2>
                 <div className="space-y-4">
                   <FormField
@@ -90,9 +90,9 @@ export default function CheckoutPage() {
                     name="customerName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
+                        <FormLabel>Nome Completo</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" className="bg-background" {...field} />
+                          <Input placeholder="Mario Rossi" className="bg-background" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -103,11 +103,11 @@ export default function CheckoutPage() {
                     name="customerEmail"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email Address</FormLabel>
+                        <FormLabel>Indirizzo Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="john@example.com" className="bg-background" {...field} />
+                          <Input type="email" placeholder="mario@esempio.it" className="bg-background" {...field} />
                         </FormControl>
-                        <p className="text-xs text-muted-foreground mt-1">Your license keys will be sent to this email address instantly.</p>
+                        <p className="text-xs text-muted-foreground mt-1">Le tue chiavi di licenza saranno inviate immediatamente a questo indirizzo email.</p>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -115,11 +115,11 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Payment Method */}
+              {/* Metodo di Pagamento */}
               <div className="bg-card border border-border rounded-xl p-6">
                 <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
                   <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm">2</span>
-                  Payment Method
+                  Metodo di Pagamento
                 </h2>
                 <FormField
                   control={form.control}
@@ -137,7 +137,7 @@ export default function CheckoutPage() {
                               <RadioGroupItem value={OrderInputPaymentMethod.card} />
                             </FormControl>
                             <div className="flex items-center justify-between w-full">
-                              <FormLabel className="font-medium cursor-pointer">Credit / Debit Card</FormLabel>
+                              <FormLabel className="font-medium cursor-pointer">Carta di Credito / Debito</FormLabel>
                               <CreditCard className="w-5 h-5 text-muted-foreground" />
                             </div>
                           </FormItem>
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
                               <RadioGroupItem value={OrderInputPaymentMethod.crypto} />
                             </FormControl>
                             <div className="flex items-center justify-between w-full">
-                              <FormLabel className="font-medium cursor-pointer">Cryptocurrency</FormLabel>
+                              <FormLabel className="font-medium cursor-pointer">Criptovaluta</FormLabel>
                               <span className="font-mono font-bold text-orange-500 text-sm">BTC / ETH</span>
                             </div>
                           </FormItem>
@@ -169,13 +169,13 @@ export default function CheckoutPage() {
                 {form.watch("paymentMethod") === OrderInputPaymentMethod.card && (
                   <div className="mt-6 space-y-4 p-4 bg-background border border-border rounded-md">
                     <div className="space-y-2">
-                      <Label>Card Number</Label>
+                      <Label>Numero Carta</Label>
                       <Input placeholder="0000 0000 0000 0000" className="font-mono" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label>Expiry (MM/YY)</Label>
-                        <Input placeholder="MM/YY" />
+                        <Label>Scadenza (MM/AA)</Label>
+                        <Input placeholder="MM/AA" />
                       </div>
                       <div className="space-y-2">
                         <Label>CVC</Label>
@@ -184,7 +184,7 @@ export default function CheckoutPage() {
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2">
                       <Lock className="w-3 h-3" />
-                      Payments are secure and encrypted.
+                      I pagamenti sono sicuri e criptati.
                     </div>
                   </div>
                 )}
@@ -198,9 +198,9 @@ export default function CheckoutPage() {
                   disabled={createOrder.isPending}
                 >
                   {createOrder.isPending ? (
-                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</>
+                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Elaborazione...</>
                   ) : (
-                    `Pay $${total.toFixed(2)}`
+                    `Paga €${total.toFixed(2)}`
                   )}
                 </Button>
               </div>
@@ -210,7 +210,7 @@ export default function CheckoutPage() {
 
         <div className="lg:col-span-5">
           <div className="bg-card border border-border rounded-xl p-6 sticky top-24">
-            <h2 className="text-xl font-bold mb-6">Order Summary</h2>
+            <h2 className="text-xl font-bold mb-6">Riepilogo Ordine</h2>
             
             <div className="space-y-4 mb-6 max-h-[40vh] overflow-y-auto pr-2">
               {items.map((item) => (
@@ -225,8 +225,8 @@ export default function CheckoutPage() {
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-sm line-clamp-2">{item.product.name}</h4>
                     <div className="flex justify-between items-center mt-1">
-                      <span className="text-xs text-muted-foreground">Qty: {item.quantity}</span>
-                      <span className="font-bold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                      <span className="text-xs text-muted-foreground">Qtà: {item.quantity}</span>
+                      <span className="font-bold">€{(item.product.price * item.quantity).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -237,23 +237,23 @@ export default function CheckoutPage() {
 
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-muted-foreground text-sm">
-                <span>Subtotal</span>
-                <span>${total.toFixed(2)}</span>
+                <span>Subtotale</span>
+                <span>€{total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-muted-foreground text-sm">
-                <span>Delivery</span>
-                <span className="text-primary font-medium">Instant Email</span>
+                <span>Consegna</span>
+                <span className="text-primary font-medium">Email Istantanea</span>
               </div>
               <Separator className="my-3" />
               <div className="flex justify-between items-center text-xl font-extrabold text-foreground">
-                <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>Totale</span>
+                <span>€{total.toFixed(2)}</span>
               </div>
             </div>
             
             <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg text-sm border border-border">
               <Check className="w-5 h-5 text-green-500 shrink-0" />
-              <p className="text-muted-foreground">You are guaranteed a 100% working key or your money back.</p>
+              <p className="text-muted-foreground">Garantiamo una chiave funzionante al 100% o il rimborso completo.</p>
             </div>
 
             <div className="lg:hidden mt-6">
@@ -264,9 +264,9 @@ export default function CheckoutPage() {
                 disabled={createOrder.isPending}
               >
                 {createOrder.isPending ? (
-                  <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</>
+                  <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Elaborazione...</>
                 ) : (
-                  `Pay $${total.toFixed(2)}`
+                  `Paga €${total.toFixed(2)}`
                 )}
               </Button>
             </div>

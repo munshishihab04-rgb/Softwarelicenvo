@@ -36,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <span className="text-white">SoftKeys</span>
             </Link>
             <nav className="flex items-center gap-6 text-sm font-semibold text-white/40">
-              <Link href="/products" className="hover:text-white transition-colors">Products</Link>
+              <Link href="/products" className="hover:text-white transition-colors">Prodotti</Link>
               {categories.slice(0, 4).map((c) => (
                 <Link key={c.id} href={`/category/${c.slug}`} className="hover:text-white transition-colors">
                   {c.name}
@@ -49,7 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <form onSubmit={handleSearch} className="flex flex-1 max-w-sm relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25" />
             <input
-              placeholder="Search software, games, OS..."
+              placeholder="Cerca software, giochi, OS..."
               className="w-full h-9 pl-9 pr-4 bg-white/6 border border-white/8 rounded-lg text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#c6f135]/40 focus:bg-white/8 transition-all"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -71,9 +71,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </button>
         </div>
 
-        {/* ── Mobile bar: [menu] [logo center] [cart] ── */}
+        {/* ── Mobile bar ── */}
         <div className="md:hidden flex items-center h-14 px-4 relative">
-          {/* Left — hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/6 border border-white/8"
@@ -81,7 +80,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
 
-          {/* Center — logo (absolute so it's truly centered) */}
           <Link
             href="/"
             className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1.5 font-black text-lg tracking-tight"
@@ -93,7 +91,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <span className="text-white">SoftKeys</span>
           </Link>
 
-          {/* Right — cart */}
           <button
             onClick={() => setIsDrawerOpen(true)}
             className="ml-auto relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/6 border border-white/8"
@@ -113,13 +110,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <form onSubmit={handleSearch} className="relative mb-3">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25" />
               <input
-                placeholder="Search..."
+                placeholder="Cerca..."
                 className="w-full h-10 pl-9 pr-4 bg-white/6 border border-white/8 rounded-lg text-sm text-white placeholder-white/25 focus:outline-none"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </form>
-            <Link href="/products" onClick={() => setMobileOpen(false)} className="text-sm font-semibold text-white/60 hover:text-white py-2.5 border-b border-white/6">All Products</Link>
+            <Link href="/products" onClick={() => setMobileOpen(false)} className="text-sm font-semibold text-white/60 hover:text-white py-2.5 border-b border-white/6">Tutti i Prodotti</Link>
             {categories.slice(0, 6).map((c) => (
               <Link key={c.id} href={`/category/${c.slug}`} onClick={() => setMobileOpen(false)} className="text-sm font-semibold text-white/60 hover:text-white py-2.5 border-b border-white/6 last:border-0">
                 {c.name}
@@ -146,45 +143,45 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <span className="text-white">SoftKeys</span>
               </div>
               <p className="text-sm text-white/35 leading-relaxed">
-                Premium digital marketplace for genuine software keys and subscriptions. Fast, secure, instantly delivered.
+                Marketplace digitale premium per chiavi software e abbonamenti originali. Veloce, sicuro, consegna immediata.
               </p>
             </div>
 
-            {/* Categories */}
+            {/* Categorie */}
             <div>
-              <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Categories</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Categorie</h3>
               <ul className="space-y-2.5 text-sm text-white/40">
-                <li><Link href="/products" className="hover:text-white transition-colors">All Products</Link></li>
+                <li><Link href="/products" className="hover:text-white transition-colors">Tutti i Prodotti</Link></li>
                 {categories.slice(0, 5).map((c) => (
                   <li key={c.id}><Link href={`/category/${c.slug}`} className="hover:text-white transition-colors">{c.name}</Link></li>
                 ))}
               </ul>
             </div>
 
-            {/* Support */}
+            {/* Supporto */}
             <div>
-              <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Support</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Supporto</h3>
               <ul className="space-y-2.5 text-sm text-white/40">
                 {[
-                  { label: "Help Center", href: "/help-center" },
-                  { label: "Activation Guides", href: "/activation-guides" },
-                  { label: "Refund Policy", href: "/refund-policy" },
-                  { label: "Contact Us", href: "/contact" },
+                  { label: "Centro Assistenza", href: "/help-center" },
+                  { label: "Guide all'Attivazione", href: "/activation-guides" },
+                  { label: "Politica di Rimborso", href: "/refund-policy" },
+                  { label: "Contattaci", href: "/contact" },
                 ].map(({ label, href }) => (
                   <li key={label}><Link href={href} className="hover:text-white transition-colors">{label}</Link></li>
                 ))}
               </ul>
             </div>
 
-            {/* Trust */}
+            {/* Garanzie */}
             <div>
-              <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Trust</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Garanzie</h3>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: ShieldCheck, label: "Secure Payment", color: "text-emerald-400" },
-                  { icon: Zap, label: "Instant Delivery", color: "text-[#c6f135]" },
-                  { icon: PhoneCall, label: "24/7 Support", color: "text-sky-400" },
-                  { icon: Package, label: "Money-back", color: "text-violet-400" },
+                  { icon: ShieldCheck, label: "Pagamento Sicuro", color: "text-emerald-400" },
+                  { icon: Zap, label: "Consegna Istantanea", color: "text-[#c6f135]" },
+                  { icon: PhoneCall, label: "Assistenza 24/7", color: "text-sky-400" },
+                  { icon: Package, label: "Rimborso Garantito", color: "text-violet-400" },
                 ].map(({ icon: Icon, label, color }) => (
                   <div key={label} className="flex flex-col gap-1.5 text-xs text-white/35">
                     <Icon className={`w-4 h-4 ${color}`} />
@@ -196,10 +193,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="border-t border-white/6 mt-10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/25">
-            <p>&copy; {new Date().getFullYear()} SoftKeys Store. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} SoftKeys Store. Tutti i diritti riservati.</p>
             <div className="flex gap-6">
-              <span className="hover:text-white/60 cursor-pointer transition-colors">Terms of Service</span>
-              <span className="hover:text-white/60 cursor-pointer transition-colors">Privacy Policy</span>
+              <span className="hover:text-white/60 cursor-pointer transition-colors">Termini di Servizio</span>
+              <span className="hover:text-white/60 cursor-pointer transition-colors">Informativa sulla Privacy</span>
             </div>
           </div>
         </div>

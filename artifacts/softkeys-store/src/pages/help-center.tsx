@@ -7,64 +7,64 @@ const TOPICS = [
     icon: Key,
     color: "text-[#c6f135]",
     bg: "bg-[#c6f135]/10 border-[#c6f135]/20",
-    title: "License Keys",
-    description: "How to find, activate, and manage your license keys.",
-    articles: ["Where is my license key?", "How to activate a product key", "Key already in use", "Lost your key?"],
+    title: "Chiavi di Licenza",
+    description: "Come trovare, attivare e gestire le tue chiavi di licenza.",
+    articles: ["Dove si trova la mia chiave?", "Come attivare una chiave prodotto", "Chiave già in uso", "Chiave smarrita?"],
     href: "/activation-guides",
   },
   {
     icon: Zap,
     color: "text-sky-400",
     bg: "bg-sky-400/10 border-sky-400/20",
-    title: "Orders & Delivery",
-    description: "Track your order, resend your key, and understand delivery.",
-    articles: ["How long does delivery take?", "I didn't receive my email", "Resend my license key", "Order status"],
+    title: "Ordini e Consegna",
+    description: "Traccia il tuo ordine, ricevi di nuovo la chiave e scopri come funziona la consegna.",
+    articles: ["Quanto tempo ci vuole per la consegna?", "Non ho ricevuto l'email", "Reinvia la chiave di licenza", "Stato dell'ordine"],
     href: "/help-center",
   },
   {
     icon: CreditCard,
     color: "text-violet-400",
     bg: "bg-violet-400/10 border-violet-400/20",
-    title: "Payments",
-    description: "Accepted payment methods, failed payments, and invoices.",
-    articles: ["Accepted payment methods", "Payment failed", "Request an invoice", "Secure checkout"],
+    title: "Pagamenti",
+    description: "Metodi di pagamento accettati, pagamenti falliti e fatture.",
+    articles: ["Metodi di pagamento accettati", "Pagamento fallito", "Richiedi una fattura", "Checkout sicuro"],
     href: "/help-center",
   },
   {
     icon: RefreshCw,
     color: "text-emerald-400",
     bg: "bg-emerald-400/10 border-emerald-400/20",
-    title: "Refunds & Returns",
-    description: "Our refund policy, eligibility, and how to request one.",
-    articles: ["Refund eligibility", "How to request a refund", "Refund timeline", "Non-refundable items"],
+    title: "Rimborsi e Resi",
+    description: "La nostra politica di rimborso, i requisiti e come presentare una richiesta.",
+    articles: ["Requisiti per il rimborso", "Come richiedere un rimborso", "Tempi di rimborso", "Articoli non rimborsabili"],
     href: "/refund-policy",
   },
   {
     icon: Globe,
     color: "text-orange-400",
     bg: "bg-orange-400/10 border-orange-400/20",
-    title: "Compatibility",
-    description: "Check if a product works with your OS, region, or device.",
-    articles: ["Region restrictions", "OS compatibility", "Upgrade eligibility", "Multi-device licensing"],
+    title: "Compatibilità",
+    description: "Verifica se un prodotto funziona con il tuo sistema operativo, regione o dispositivo.",
+    articles: ["Restrizioni regionali", "Compatibilità OS", "Requisiti per l'upgrade", "Licenze multi-dispositivo"],
     href: "/help-center",
   },
   {
     icon: Package,
     color: "text-pink-400",
     bg: "bg-pink-400/10 border-pink-400/20",
-    title: "Account & Orders",
-    description: "Access your order history and manage past purchases.",
-    articles: ["View order history", "Download invoice", "Update email", "Delete account"],
+    title: "Account e Ordini",
+    description: "Accedi alla cronologia degli ordini e gestisci gli acquisti passati.",
+    articles: ["Visualizza la cronologia ordini", "Scarica la fattura", "Aggiorna l'email", "Elimina l'account"],
     href: "/help-center",
   },
 ];
 
 const FAQS = [
-  { q: "How do I receive my license key?", a: "Immediately after your payment is confirmed, your license key is automatically sent to the email address you provided at checkout. Check your spam folder if you don't see it within 5 minutes." },
-  { q: "Are the license keys genuine?", a: "Yes, 100%. We source our license keys directly from official distribution channels. Every key is verified before delivery and backed by our official activation guarantee." },
-  { q: "What if my key doesn't work?", a: "Contact our support team within 30 days of purchase. We will verify your issue and either provide a replacement key or issue a full refund." },
-  { q: "Can I use a key on multiple computers?", a: "It depends on the product. OEM keys are tied to a single device. Retail keys can typically be transferred. Subscription plans specify their device limits on the product page." },
-  { q: "Which payment methods do you accept?", a: "We accept credit/debit cards (Visa, Mastercard, Amex), PayPal, and major cryptocurrencies including Bitcoin and Ethereum." },
+  { q: "Come ricevo la mia chiave di licenza?", a: "Immediatamente dopo la conferma del pagamento, la chiave di licenza viene inviata automaticamente all'indirizzo email fornito al checkout. Controlla la cartella spam se non la vedi entro 5 minuti." },
+  { q: "Le chiavi di licenza sono originali?", a: "Sì, al 100%. Le nostre chiavi di licenza provengono direttamente dai canali di distribuzione ufficiali. Ogni chiave viene verificata prima della consegna ed è coperta dalla nostra garanzia di attivazione ufficiale." },
+  { q: "Cosa succede se la mia chiave non funziona?", a: "Contatta il nostro team di supporto entro 30 giorni dall'acquisto. Verificheremo il problema e forniremo una chiave sostitutiva o un rimborso completo." },
+  { q: "Posso usare una chiave su più computer?", a: "Dipende dal prodotto. Le chiavi OEM sono legate a un singolo dispositivo. Le chiavi Retail possono generalmente essere trasferite. I piani in abbonamento specificano i limiti di dispositivi nella pagina del prodotto." },
+  { q: "Quali metodi di pagamento accettate?", a: "Accettiamo carte di credito/debito (Visa, Mastercard, Amex), PayPal e le principali criptovalute inclusi Bitcoin ed Ethereum." },
 ];
 
 export default function HelpCenter() {
@@ -80,14 +80,14 @@ export default function HelpCenter() {
           <nav className="flex items-center justify-center gap-1 text-xs text-white/35 mb-8">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-white/70">Help Center</span>
+            <span className="text-white/70">Centro Assistenza</span>
           </nav>
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-4">How can we help?</h1>
-          <p className="text-white/45 text-base md:text-lg mb-8">Search our knowledge base or browse topics below.</p>
+          <h1 className="text-3xl md:text-5xl font-black text-white mb-4">Come possiamo aiutarti?</h1>
+          <p className="text-white/45 text-base md:text-lg mb-8">Cerca nella nostra base di conoscenza o sfoglia gli argomenti qui sotto.</p>
           <div className="relative max-w-xl mx-auto">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/25" />
             <input
-              placeholder="Search help articles..."
+              placeholder="Cerca articoli di assistenza..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full h-13 pl-12 pr-4 py-4 bg-white/6 border border-white/10 rounded-xl text-white placeholder-white/25 focus:outline-none focus:border-[#c6f135]/40 text-sm"
@@ -96,7 +96,7 @@ export default function HelpCenter() {
         </div>
       </section>
 
-      {/* Topics */}
+      {/* Argomenti */}
       <section className="container mx-auto px-4 max-w-6xl py-14 md:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {TOPICS.map(({ icon: Icon, color, bg, title, description, articles, href }) => (
@@ -125,7 +125,7 @@ export default function HelpCenter() {
       <section className="border-t border-white/6 bg-[#080808] py-14 md:py-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <p className="text-xs font-black uppercase tracking-widest text-[#c6f135] mb-2">FAQ</p>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-10">Frequently asked questions</h2>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-10">Domande frequenti</h2>
           <div className="flex flex-col gap-3">
             {FAQS.map((faq, i) => (
               <div key={i} className="bg-[#0d0d0d] border border-white/8 rounded-xl overflow-hidden">
@@ -150,11 +150,11 @@ export default function HelpCenter() {
       {/* CTA */}
       <section className="py-14 md:py-16 container mx-auto px-4 max-w-3xl text-center">
         <ShieldCheck className="w-10 h-10 text-[#c6f135] mx-auto mb-4" />
-        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Still need help?</h3>
-        <p className="text-white/40 mb-6 text-sm">Our support team is available 24/7 and typically replies within 30 minutes.</p>
+        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Hai ancora bisogno di aiuto?</h3>
+        <p className="text-white/40 mb-6 text-sm">Il nostro team di supporto è disponibile 24/7 e risponde solitamente entro 30 minuti.</p>
         <Link href="/contact" className="inline-flex items-center gap-2 h-11 px-7 rounded-xl bg-[#c6f135] hover:bg-[#d4ff3d] text-black font-bold text-sm transition-all">
           <Mail className="w-4 h-4" />
-          Contact Support
+          Contatta il Supporto
         </Link>
       </section>
     </div>

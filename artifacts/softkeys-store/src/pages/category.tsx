@@ -34,8 +34,8 @@ export default function CategoryPage() {
   if (!category && !loadingCat) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
-        <h2 className="text-2xl font-bold mb-2">Category Not Found</h2>
-        <p className="text-muted-foreground">The category "{slug}" does not exist.</p>
+        <h2 className="text-2xl font-bold mb-2">Categoria Non Trovata</h2>
+        <p className="text-muted-foreground">La categoria "{slug}" non esiste.</p>
       </div>
     );
   }
@@ -48,7 +48,7 @@ export default function CategoryPage() {
         </div>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4">{category?.name}</h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          Browse our collection of premium {category?.name.toLowerCase()} software and licenses. Instant delivery and secure checkout.
+          Sfoglia la nostra collezione di software e licenze premium per {category?.name.toLowerCase()}. Consegna istantanea e checkout sicuro.
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export default function CategoryPage() {
         {isLoading ? (
           <Skeleton className="h-5 w-32" />
         ) : (
-          <p>Showing {products?.length || 0} products</p>
+          <p>Trovati {products?.length || 0} prodotti</p>
         )}
       </div>
 
@@ -75,8 +75,8 @@ export default function CategoryPage() {
       ) : (
         <div className="py-24 text-center border border-dashed border-border rounded-xl bg-card">
           <Package className="w-12 h-12 mx-auto text-muted-foreground mb-4 opacity-50" />
-          <h3 className="text-xl font-bold mb-2">No products found in this category</h3>
-          <p className="text-muted-foreground">Check back later for new additions.</p>
+          <h3 className="text-xl font-bold mb-2">Nessun prodotto in questa categoria</h3>
+          <p className="text-muted-foreground">Torna a controllare presto per le nuove aggiunte.</p>
         </div>
       )}
     </div>

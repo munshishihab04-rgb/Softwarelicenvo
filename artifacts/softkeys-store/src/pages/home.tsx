@@ -55,13 +55,12 @@ function SectionHeader({
         href={href}
         className="hidden sm:flex items-center gap-1.5 text-sm text-white/40 hover:text-white font-semibold transition-colors shrink-0"
       >
-        View all <ArrowRight className="w-3.5 h-3.5" />
+        Vedi tutti <ArrowRight className="w-3.5 h-3.5" />
       </Link>
     </div>
   );
 }
 
-/** Horizontally scrollable on mobile, grid on md+ */
 function ProductCarousel({ children, loading }: { children: React.ReactNode; loading: boolean }) {
   if (loading) {
     return (
@@ -74,11 +73,9 @@ function ProductCarousel({ children, loading }: { children: React.ReactNode; loa
   }
   return (
     <>
-      {/* Mobile carousel */}
       <div className="md:hidden flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
         {children}
       </div>
-      {/* Desktop grid */}
       <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5">
         {children}
       </div>
@@ -86,7 +83,6 @@ function ProductCarousel({ children, loading }: { children: React.ReactNode; loa
   );
 }
 
-/** Wrapper that sets carousel card width on mobile */
 function CarouselCard({ children }: { children: React.ReactNode }) {
   return (
     <div className="snap-start shrink-0 w-[75vw] max-w-[280px] md:w-auto md:max-w-none">
@@ -113,27 +109,27 @@ export default function Home() {
           <div className="flex flex-col items-start gap-5 md:gap-6 max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#c6f135]/10 border border-[#c6f135]/25 text-[#c6f135] text-xs md:text-sm font-semibold">
               <Zap className="w-3.5 h-3.5" />
-              Instant Digital Delivery — keys in seconds
+              Consegna Digitale Istantanea — chiavi in pochi secondi
             </div>
             <h1 className="text-4xl md:text-7xl font-black tracking-tight text-white leading-[1.05]">
-              Premium software keys,{" "}
-              <span className="text-[#c6f135]">delivered instantly.</span>
+              Chiavi software premium,{" "}
+              <span className="text-[#c6f135]">consegnate all'istante.</span>
             </h1>
             <p className="text-base md:text-xl text-white/45 max-w-xl leading-relaxed">
-              Genuine licenses for Windows, Office, Autodesk, Adobe and games — at unbeatable prices.
+              Licenze originali per Windows, Office, Autodesk, Adobe e giochi — a prezzi imbattibili.
             </p>
             <div className="flex flex-wrap gap-3 mt-1">
               <Link
                 href="/products"
                 className="h-11 md:h-12 px-6 md:px-8 rounded-xl bg-[#c6f135] hover:bg-[#d4ff3d] text-black font-bold text-sm md:text-base flex items-center gap-2 transition-all active:scale-95"
               >
-                Shop All Products
+                Tutti i Prodotti
               </Link>
               <Link
                 href="/products?onSale=true"
                 className="h-11 md:h-12 px-6 md:px-8 rounded-xl bg-white/8 hover:bg-white/12 border border-white/10 text-white font-bold text-sm md:text-base flex items-center gap-2 transition-all"
               >
-                View Deals <ArrowRight className="w-4 h-4" />
+                Offerte <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -145,10 +141,10 @@ export default function Home() {
         <div className="container mx-auto px-4 max-w-6xl min-w-max md:min-w-0">
           <div className="flex md:grid md:grid-cols-4 divide-x divide-white/6">
             {[
-              { icon: ShieldCheck, title: "Secure Payment", sub: "256-bit SSL", color: "text-emerald-400" },
-              { icon: Zap, title: "Instant Delivery", sub: "Keys via email", color: "text-[#c6f135]" },
-              { icon: Clock, title: "24/7 Support", sub: "Always available", color: "text-sky-400" },
-              { icon: Award, title: "Money-Back", sub: "Guaranteed", color: "text-violet-400" },
+              { icon: ShieldCheck, title: "Pagamento Sicuro", sub: "SSL 256-bit", color: "text-emerald-400" },
+              { icon: Zap, title: "Consegna Istantanea", sub: "Chiavi via email", color: "text-[#c6f135]" },
+              { icon: Clock, title: "Assistenza 24/7", sub: "Sempre disponibile", color: "text-sky-400" },
+              { icon: Award, title: "Rimborso Garantito", sub: "Soddisfatti o rimborsati", color: "text-violet-400" },
             ].map(({ icon: Icon, title, sub, color }) => (
               <div key={title} className="flex items-center gap-3 py-4 px-5 md:py-5 md:px-6 shrink-0">
                 <Icon className={`w-5 h-5 shrink-0 ${color}`} />
@@ -162,9 +158,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── FEATURED PRODUCTS ── */}
+      {/* ── PRODOTTI IN EVIDENZA ── */}
       <section className="py-12 md:py-20 container mx-auto px-4 max-w-6xl">
-        <SectionHeader eyebrow="Top Picks" title="Featured Products" href="/products?featured=true" />
+        <SectionHeader eyebrow="I Più Richiesti" title="Prodotti in Evidenza" href="/products?featured=true" />
         <ProductCarousel loading={loadingFeatured}>
           {featured?.slice(0, 4).map((p) => (
             <CarouselCard key={p.id}>
@@ -174,17 +170,16 @@ export default function Home() {
         </ProductCarousel>
       </section>
 
-      {/* ── CATEGORIES ── */}
+      {/* ── CATEGORIE ── */}
       <section className="py-10 md:py-14 border-y border-white/6 bg-[#080808]">
         <div className="container mx-auto px-4 max-w-6xl">
-          <SectionHeader eyebrow="Catalog" title="Browse by Category" href="/products" />
+          <SectionHeader eyebrow="Catalogo" title="Sfoglia per Categoria" href="/products" />
           {loadingCategories ? (
             <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-24 rounded-xl bg-white/5" />)}
             </div>
           ) : (
             <>
-              {/* Mobile: horizontal scroll */}
               <div className="md:hidden flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x scrollbar-hide">
                 {categories?.slice(0, 8).map((cat) => (
                   <Link
@@ -202,7 +197,6 @@ export default function Home() {
                   </Link>
                 ))}
               </div>
-              {/* Desktop: grid */}
               <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-4">
                 {categories?.slice(0, 6).map((cat) => (
                   <Link
@@ -215,7 +209,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-white">{cat.name}</p>
-                      <p className="text-xs text-white/35 mt-0.5">{cat.productCount} products</p>
+                      <p className="text-xs text-white/35 mt-0.5">{cat.productCount} prodotti</p>
                     </div>
                   </Link>
                 ))}
@@ -225,9 +219,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── HOT DEALS ── */}
+      {/* ── OFFERTE ── */}
       <section className="py-12 md:py-20 container mx-auto px-4 max-w-6xl">
-        <SectionHeader eyebrow="Limited Time" title="Hot Deals" eyebrowColor="text-red-400" href="/products?onSale=true" />
+        <SectionHeader eyebrow="Tempo Limitato" title="Offerte del Momento" eyebrowColor="text-red-400" href="/products?onSale=true" />
         <ProductCarousel loading={loadingDeals}>
           {deals?.slice(0, 4).map((p) => (
             <CarouselCard key={p.id}>
@@ -237,16 +231,16 @@ export default function Home() {
         </ProductCarousel>
       </section>
 
-      {/* ── STATS ── */}
+      {/* ── STATISTICHE ── */}
       {stats && (
         <section className="border-t border-white/6 bg-[#080808] py-14 md:py-16">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {[
-                { value: stats.totalProducts, label: "Products", suffix: "", accent: false },
-                { value: stats.totalCategories, label: "Categories", suffix: "", accent: false },
-                { value: stats.totalKeysSold, label: "Keys Delivered", suffix: "+", accent: true },
-                { value: stats.satisfiedCustomers, label: "Happy Customers", suffix: "+", accent: false },
+                { value: stats.totalProducts, label: "Prodotti", suffix: "", accent: false },
+                { value: stats.totalCategories, label: "Categorie", suffix: "", accent: false },
+                { value: stats.totalKeysSold, label: "Chiavi Consegnate", suffix: "+", accent: true },
+                { value: stats.satisfiedCustomers, label: "Clienti Soddisfatti", suffix: "+", accent: false },
               ].map(({ value, label, suffix, accent }) => (
                 <div key={label} className="flex flex-col gap-1">
                   <span className={`text-3xl md:text-5xl font-black tracking-tight ${accent ? "text-[#c6f135]" : "text-white"}`}>

@@ -1,9 +1,8 @@
 import { useCart } from "@/hooks/use-cart";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 export function CartDrawer() {
   const { items, isDrawerOpen, setIsDrawerOpen, updateQuantity, removeItem, total } = useCart();
@@ -18,9 +17,9 @@ export function CartDrawer() {
     <Sheet open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <SheetContent className="flex flex-col w-full sm:max-w-lg bg-card text-card-foreground border-border border-l">
         <SheetHeader>
-          <SheetTitle className="text-xl font-bold">Shopping Cart</SheetTitle>
+          <SheetTitle className="text-xl font-bold">Carrello</SheetTitle>
           <SheetDescription>
-            {items.length === 0 ? "Your cart is empty." : `You have ${items.length} items in your cart.`}
+            {items.length === 0 ? "Il tuo carrello è vuoto." : `Hai ${items.length} articoli nel carrello.`}
           </SheetDescription>
         </SheetHeader>
         
@@ -30,12 +29,12 @@ export function CartDrawer() {
               <div className="p-4 bg-muted/20 rounded-full">
                 <Trash2 className="w-8 h-8 opacity-20" />
               </div>
-              <p>Looks like you haven't added anything yet.</p>
+              <p>Non hai ancora aggiunto nulla.</p>
               <Button variant="outline" onClick={() => {
                 setIsDrawerOpen(false);
                 setLocation("/products");
               }}>
-                Browse Products
+                Sfoglia i Prodotti
               </Button>
             </div>
           ) : (
@@ -51,7 +50,7 @@ export function CartDrawer() {
                   </div>
                   <div className="flex-1 flex flex-col">
                     <h4 className="font-semibold line-clamp-1">{item.product.name}</h4>
-                    <span className="text-primary font-bold mt-auto">${item.product.price.toFixed(2)}</span>
+                    <span className="text-primary font-bold mt-auto">€{item.product.price.toFixed(2)}</span>
                   </div>
                   <div className="flex flex-col justify-between items-end">
                     <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-destructive" onClick={() => removeItem(item.product.id)}>
@@ -76,18 +75,18 @@ export function CartDrawer() {
         {items.length > 0 && (
           <div className="border-t border-border pt-4 space-y-4">
             <div className="flex items-center justify-between font-bold text-lg">
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>Totale</span>
+              <span>€{total.toFixed(2)}</span>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" className="w-full" onClick={() => {
                 setIsDrawerOpen(false);
                 setLocation("/cart");
               }}>
-                View Cart
+                Vedi Carrello
               </Button>
               <Button className="w-full font-bold" onClick={handleCheckout}>
-                Checkout
+                Acquista
               </Button>
             </div>
           </div>

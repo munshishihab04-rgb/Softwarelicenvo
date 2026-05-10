@@ -17,8 +17,8 @@ export default function OrderConfirmationPage() {
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
-      title: "Copied!",
-      description: "License key copied to clipboard.",
+      title: "Copiato!",
+      description: "Chiave di licenza copiata negli appunti.",
     });
   };
 
@@ -36,10 +36,10 @@ export default function OrderConfirmationPage() {
   if (isError || !order) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
-        <h2 className="text-2xl font-bold mb-2">Order Not Found</h2>
-        <p className="text-muted-foreground mb-6">We couldn't find the details for this order.</p>
+        <h2 className="text-2xl font-bold mb-2">Ordine Non Trovato</h2>
+        <p className="text-muted-foreground mb-6">Non riusciamo a trovare i dettagli di questo ordine.</p>
         <Link href="/">
-          <Button>Return Home</Button>
+          <Button>Torna alla Home</Button>
         </Link>
       </div>
     );
@@ -51,20 +51,20 @@ export default function OrderConfirmationPage() {
         <div className="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/20">
           <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h1 className="text-4xl font-extrabold tracking-tight mb-4">Payment Successful!</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight mb-4">Pagamento Completato!</h1>
         <p className="text-lg text-muted-foreground">
-          Thank you for your purchase, {order.customerName}. Your order #{order.id} is complete.
+          Grazie per il tuo acquisto, {order.customerName}. Il tuo ordine #{order.id} è completato.
         </p>
         <div className="flex items-center justify-center gap-2 mt-4 text-sm font-medium px-4 py-2 bg-muted/50 border border-border rounded-full inline-flex mx-auto">
           <Mail className="w-4 h-4 text-primary" />
-          Receipt and instructions sent to <span className="text-foreground">{order.customerEmail}</span>
+          Ricevuta e istruzioni inviate a <span className="text-foreground">{order.customerEmail}</span>
         </div>
       </div>
 
       <div className="bg-card border border-primary/30 shadow-[0_0_40px_-15px_rgba(var(--primary),0.2)] rounded-2xl overflow-hidden mb-8">
         <div className="bg-primary/5 border-b border-primary/20 px-6 py-4 flex items-center gap-3">
           <Key className="w-5 h-5 text-primary" />
-          <h2 className="text-xl font-bold">Your License Keys</h2>
+          <h2 className="text-xl font-bold">Le Tue Chiavi di Licenza</h2>
         </div>
         
         <div className="divide-y divide-border">
@@ -73,7 +73,7 @@ export default function OrderConfirmationPage() {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                 <h3 className="font-bold text-lg">{item.productName}</h3>
                 <div className="text-sm font-medium text-muted-foreground">
-                  Qty: {item.quantity} &times; ${item.unitPrice.toFixed(2)}
+                  Qtà: {item.quantity} &times; €{item.unitPrice.toFixed(2)}
                 </div>
               </div>
               
@@ -85,7 +85,7 @@ export default function OrderConfirmationPage() {
                   <div className="flex items-center gap-2 shrink-0">
                     <Button variant="outline" size="sm" onClick={() => handleCopy(item.licenseKey!)}>
                       <Copy className="w-4 h-4 mr-2" />
-                      Copy
+                      Copia
                     </Button>
                     <Button size="sm">
                       <Download className="w-4 h-4 mr-2" />
@@ -95,7 +95,7 @@ export default function OrderConfirmationPage() {
                 </div>
               ) : (
                 <div className="bg-muted p-4 rounded-lg text-center text-muted-foreground">
-                  Key processing... Please check your email in a few minutes.
+                  Chiave in elaborazione... Controlla la tua email tra qualche minuto.
                 </div>
               )}
             </div>
@@ -105,43 +105,43 @@ export default function OrderConfirmationPage() {
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-card border border-border rounded-xl p-6">
-          <h3 className="font-bold text-lg mb-4 border-b border-border pb-2">Order Details</h3>
+          <h3 className="font-bold text-lg mb-4 border-b border-border pb-2">Dettagli Ordine</h3>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Order ID</span>
+              <span className="text-muted-foreground">ID Ordine</span>
               <span className="font-mono font-medium">#{order.id}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Date</span>
-              <span className="font-medium">{new Date(order.createdAt).toLocaleDateString()}</span>
+              <span className="text-muted-foreground">Data</span>
+              <span className="font-medium">{new Date(order.createdAt).toLocaleDateString("it-IT")}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Payment Method</span>
+              <span className="text-muted-foreground">Metodo di Pagamento</span>
               <span className="font-medium uppercase">{order.paymentMethod}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Status</span>
+              <span className="text-muted-foreground">Stato</span>
               <span className="font-medium text-green-500 uppercase">{order.status}</span>
             </div>
           </div>
         </div>
 
         <div className="bg-card border border-border rounded-xl p-6">
-          <h3 className="font-bold text-lg mb-4 border-b border-border pb-2">Summary</h3>
+          <h3 className="font-bold text-lg mb-4 border-b border-border pb-2">Riepilogo</h3>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Subtotal</span>
-              <span className="font-medium">${order.total.toFixed(2)}</span>
+              <span className="text-muted-foreground">Subtotale</span>
+              <span className="font-medium">€{order.total.toFixed(2)}</span>
             </div>
             {order.discount && (
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Discount</span>
-                <span className="font-medium text-destructive">-${order.discount.toFixed(2)}</span>
+                <span className="text-muted-foreground">Sconto</span>
+                <span className="font-medium text-destructive">-€{order.discount.toFixed(2)}</span>
               </div>
             )}
             <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
-              <span>Total Paid</span>
-              <span className="text-primary">${(order.total - (order.discount || 0)).toFixed(2)}</span>
+              <span>Totale Pagato</span>
+              <span className="text-primary">€{(order.total - (order.discount || 0)).toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@ export default function OrderConfirmationPage() {
 
       <div className="mt-12 text-center">
         <Link href="/">
-          <Button variant="outline" size="lg">Continue Shopping</Button>
+          <Button variant="outline" size="lg">Continua gli Acquisti</Button>
         </Link>
       </div>
     </div>

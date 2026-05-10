@@ -51,8 +51,8 @@ export default function ProductDetail() {
   if (isError || !product) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
-        <h2 className="text-2xl font-bold mb-2">Product Not Found</h2>
-        <p className="text-white/40">The product you're looking for doesn't exist.</p>
+        <h2 className="text-2xl font-bold mb-2">Prodotto Non Trovato</h2>
+        <p className="text-white/40">Il prodotto che stai cercando non esiste.</p>
       </div>
     );
   }
@@ -65,18 +65,18 @@ export default function ProductDetail() {
 
   const features: string[] = product.type === "subscription"
     ? [
-        `${product.subscriptionDuration ?? "Annual"} full access`,
-        "Always up to date — all future updates included",
-        "Multi-device license",
-        "Official activation guaranteed",
-        "Cloud-based management",
+        `Accesso completo per ${product.subscriptionDuration ?? "un anno"}`,
+        "Sempre aggiornato — tutti gli aggiornamenti futuri inclusi",
+        "Licenza multi-dispositivo",
+        "Attivazione ufficiale garantita",
+        "Gestione basata su cloud",
       ]
     : [
-        "Lifetime license key — pay once, own forever",
-        "Instant delivery via email",
-        "Official activation guaranteed",
-        "No subscription required",
-        "100% genuine license",
+        "Chiave di licenza a vita — paghi una volta, è tua per sempre",
+        "Consegna istantanea via email",
+        "Attivazione ufficiale garantita",
+        "Nessun abbonamento richiesto",
+        "Licenza 100% originale",
       ];
 
   const handleAddToCart = () => {
@@ -84,7 +84,6 @@ export default function ProductDetail() {
   };
 
   return (
-    /* Extra bottom padding on mobile to make room for sticky bar */
     <div className="min-h-screen bg-[#050505] pb-32 md:pb-0">
       <div className="container mx-auto px-4 py-5 md:py-6 max-w-6xl">
 
@@ -92,7 +91,7 @@ export default function ProductDetail() {
         <nav className="flex items-center gap-1 text-xs md:text-sm text-white/35 mb-6 md:mb-8 overflow-x-auto whitespace-nowrap">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3 shrink-0" />
-          <Link href="/products" className="hover:text-white transition-colors">Products</Link>
+          <Link href="/products" className="hover:text-white transition-colors">Prodotti</Link>
           <ChevronRight className="w-3 h-3 shrink-0" />
           <span className="text-white/70 truncate max-w-[160px] md:max-w-none">{product.name}</span>
         </nav>
@@ -100,7 +99,7 @@ export default function ProductDetail() {
         {/* Main Grid */}
         <div className="grid md:grid-cols-2 gap-6 md:gap-14 mb-14 md:mb-20">
 
-          {/* LEFT — Image */}
+          {/* LEFT — Immagine */}
           <div className="relative rounded-2xl overflow-hidden bg-[#0d0d0d] border border-white/8 aspect-square flex items-center justify-center">
             {discount > 0 && (
               <span className="absolute top-4 left-4 z-10 bg-[#c6f135] text-black text-sm font-black px-3 py-1.5 rounded-lg">
@@ -120,7 +119,7 @@ export default function ProductDetail() {
           {/* RIGHT — Info */}
           <div className="flex flex-col gap-4 md:gap-5 py-1 md:py-2">
 
-            {/* Category + Type Badge */}
+            {/* Categoria + Badge Tipo */}
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-[11px] font-black uppercase tracking-widest text-white/45">
                 {product.categoryName}
@@ -132,40 +131,40 @@ export default function ProductDetail() {
               )}
               {product.type === "key" && (
                 <span className="text-xs font-semibold text-sky-300 border border-sky-400/40 bg-sky-400/10 rounded px-2 py-0.5">
-                  License Key
+                  Chiave di Licenza
                 </span>
               )}
             </div>
 
-            {/* Title */}
+            {/* Titolo */}
             <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
               {product.name}
             </h1>
 
-            {/* Description */}
+            {/* Descrizione */}
             <p className="text-sm md:text-[15px] text-white/50 leading-relaxed">
               {product.description}
             </p>
 
-            {/* Status row */}
+            {/* Stato */}
             <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm">
               <span className="flex items-center gap-1.5 font-semibold text-emerald-400">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-                {product.inStock ? "Available" : "Out of Stock"}
+                {product.inStock ? "Disponibile" : "Esaurito"}
               </span>
               <span className="flex items-center gap-1.5 font-semibold text-[#c6f135]">
                 <Zap className="w-3.5 h-3.5" />
-                Instant Delivery
+                Consegna Istantanea
               </span>
               <span className="flex items-center gap-1.5 text-white/35 font-medium">
                 <Globe className="w-3.5 h-3.5" />
-                Global
+                Globale
               </span>
             </div>
 
-            {/* Platform */}
+            {/* Piattaforma */}
             <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-xs md:text-sm text-white/35 font-medium shrink-0">Platform:</span>
+              <span className="text-xs md:text-sm text-white/35 font-medium shrink-0">Piattaforma:</span>
               <div className="flex flex-wrap gap-2">
                 {platforms.map((p) => (
                   <span key={p} className="text-xs font-semibold text-white bg-white/10 rounded px-3 py-1">
@@ -175,7 +174,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            {/* Price */}
+            {/* Prezzo */}
             <div className="flex items-end gap-3 md:gap-4">
               <span className="text-4xl md:text-5xl font-black text-white tracking-tight">
                 €{product.price.toFixed(2)}
@@ -187,7 +186,7 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Qty + Add to Cart — desktop only */}
+            {/* Qty + Aggiungi al Carrello — solo desktop */}
             <div className="hidden md:flex items-center gap-3">
               <div className="flex items-center gap-0 bg-white/8 rounded-xl border border-white/10 overflow-hidden h-14">
                 <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="w-12 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors">
@@ -204,17 +203,17 @@ export default function ProductDetail() {
                 className="flex-1 h-14 rounded-xl bg-[#c6f135] hover:bg-[#d4ff3d] active:scale-[.98] transition-all flex items-center justify-center gap-2.5 font-bold text-black text-base disabled:opacity-40"
               >
                 <ShoppingCart className="w-5 h-5" strokeWidth={2.5} />
-                Add to Cart
+                Aggiungi al Carrello
               </button>
             </div>
 
-            {/* Trust badges */}
+            {/* Badge di fiducia */}
             <div className="hidden md:grid grid-cols-2 gap-3 pt-1 border-t border-white/8">
               {[
-                { icon: ShieldCheck, label: "Official Activation Guaranteed", color: "text-emerald-400" },
-                { icon: Mail, label: "Delivery via Email", color: "text-sky-400" },
-                { icon: Clock, label: "24/7 Support", color: "text-violet-400" },
-                { icon: Check, label: "100% Genuine", color: "text-[#c6f135]" },
+                { icon: ShieldCheck, label: "Attivazione Ufficiale Garantita", color: "text-emerald-400" },
+                { icon: Mail, label: "Consegna via Email", color: "text-sky-400" },
+                { icon: Clock, label: "Assistenza 24/7", color: "text-violet-400" },
+                { icon: Check, label: "100% Originale", color: "text-[#c6f135]" },
               ].map(({ icon: Icon, label, color }) => (
                 <div key={label} className="flex items-center gap-2.5 text-sm text-white/50">
                   <Icon className={`w-4 h-4 shrink-0 ${color}`} />
@@ -225,9 +224,9 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Features */}
+        {/* Caratteristiche */}
         <div className="mb-14">
-          <h2 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-5">Features</h2>
+          <h2 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-5">Caratteristiche</h2>
           <div className="grid sm:grid-cols-2 gap-2.5 md:gap-3">
             {features.map((f) => (
               <div key={f} className="flex items-start gap-3 text-sm md:text-[15px] text-white/60">
@@ -238,11 +237,10 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Related Products */}
+        {/* Prodotti correlati */}
         {!loadingRelated && relatedProducts && relatedProducts.length > 0 && (
           <div className="border-t border-white/8 pt-12 md:pt-14">
-            <h2 className="text-lg md:text-xl font-bold text-white mb-6 md:mb-8">You might also like</h2>
-            {/* Mobile carousel */}
+            <h2 className="text-lg md:text-xl font-bold text-white mb-6 md:mb-8">Potrebbe interessarti anche</h2>
             <div className="md:hidden flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 snap-x scrollbar-hide">
               {relatedProducts.slice(0, 4).map((rp) => (
                 <div key={rp.id} className="snap-start shrink-0 w-[75vw] max-w-[280px]">
@@ -250,7 +248,6 @@ export default function ProductDetail() {
                 </div>
               ))}
             </div>
-            {/* Desktop grid */}
             <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5">
               {relatedProducts.slice(0, 4).map((rp) => (
                 <ProductCard key={rp.id} product={rp} />
@@ -260,11 +257,10 @@ export default function ProductDetail() {
         )}
       </div>
 
-      {/* ── STICKY BOTTOM BAR — mobile only ── */}
+      {/* ── BARRA INFERIORE FISSA — solo mobile ── */}
       {product.inStock && (
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-md border-t border-white/10 px-4 py-3 safe-area-pb">
           <div className="flex items-center gap-3">
-            {/* Qty */}
             <div className="flex items-center bg-white/8 border border-white/10 rounded-xl overflow-hidden h-12 shrink-0">
               <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors">
                 <Minus className="w-3.5 h-3.5" />
@@ -275,23 +271,21 @@ export default function ProductDetail() {
               </button>
             </div>
 
-            {/* Add to Cart */}
             <button
               onClick={handleAddToCart}
               className="flex-1 h-12 rounded-xl bg-white/8 border border-white/10 hover:bg-white/14 active:scale-[.98] transition-all flex items-center justify-center gap-2 font-bold text-white text-sm"
             >
               <ShoppingCart className="w-4 h-4" strokeWidth={2.5} />
-              Cart
+              Carrello
             </button>
 
-            {/* Buy Now */}
             <Link
               href="/checkout"
               onClick={handleAddToCart}
               className="flex-[2] h-12 rounded-xl bg-[#c6f135] hover:bg-[#d4ff3d] active:scale-[.98] transition-all flex items-center justify-center gap-2 font-bold text-black text-sm"
             >
               <CreditCard className="w-4 h-4" strokeWidth={2.5} />
-              Buy Now
+              Acquista Ora
             </Link>
           </div>
         </div>
