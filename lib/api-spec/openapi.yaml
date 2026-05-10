@@ -1,22 +1,26 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: SoftKeys Store API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: products
+    description: Software products and keys
+  - name: categories
+    description: Product categories
+  - name: orders
+    description: Order management
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +28,351 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /categories:
+    get:
+      operationId: listCategories
+      tags: [categories]
+      summary: List all categories
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /products:
+    get:
+      operationId: listProducts
+      tags: [products]
+      summary: List products with optional filtering
+      parameters:
+        - name: categoryId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: search
+          in: query
+          schema:
+            type: ["string", "null"]
+        - name: featured
+          in: query
+          schema:
+            type: ["boolean", "null"]
+        - name: onSale
+          in: query
+          schema:
+            type: ["boolean", "null"]
+        - name: type
+          in: query
+          schema:
+            type: ["string", "null"]
+            enum: ["key", "subscription", null]
+      responses:
+        "200":
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /products/featured:
+    get:
+      operationId: getFeaturedProducts
+      tags: [products]
+      summary: Get featured/highlighted products for homepage
+      responses:
+        "200":
+          description: Featured products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /products/deals:
+    get:
+      operationId: getDealsProducts
+      tags: [products]
+      summary: Get products currently on deal/sale
+      responses:
+        "200":
+          description: Products on deal
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /products/stats:
+    get:
+      operationId: getStoreStats
+      tags: [products]
+      summary: Get store-level stats (total products, categories, keys sold)
+      responses:
+        "200":
+          description: Store statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoreStats"
+
+  /products/{id}:
+    get:
+      operationId: getProduct
+      tags: [products]
+      summary: Get a single product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /products/{id}/related:
+    get:
+      operationId: getRelatedProducts
+      tags: [products]
+      summary: Get related products for a given product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Related products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Place an order (checkout)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      summary: Get an order by ID (for confirmation page)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Order found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+
+    Category:
+      type: object
+      required: [id, name, slug, icon]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        icon:
+          type: string
+        productCount:
+          type: integer
+
+    Product:
+      type: object
+      required: [id, name, slug, description, price, categoryId, categoryName, type, platform, inStock, rating, reviewCount, imageUrl]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        originalPrice:
+          type: ["number", "null"]
+        categoryId:
+          type: integer
+        categoryName:
+          type: string
+        type:
+          type: string
+          enum: ["key", "subscription"]
+        subscriptionDuration:
+          type: ["string", "null"]
+          description: "e.g. '1 year', '3 years', 'lifetime'"
+        platform:
+          type: string
+          description: "e.g. 'Windows', 'Mac', 'Cross-platform'"
+        inStock:
+          type: boolean
+        featured:
+          type: boolean
+        onSale:
+          type: boolean
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+        imageUrl:
+          type: string
+        badge:
+          type: ["string", "null"]
+          description: "e.g. 'Best Seller', 'Hot Deal', 'New'"
+
+    StoreStats:
+      type: object
+      required: [totalProducts, totalCategories, totalKeysSold, satisfiedCustomers]
+      properties:
+        totalProducts:
+          type: integer
+        totalCategories:
+          type: integer
+        totalKeysSold:
+          type: integer
+        satisfiedCustomers:
+          type: integer
+
+    OrderItem:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId:
+          type: integer
+        quantity:
+          type: integer
+
+    OrderInput:
+      type: object
+      required: [items, customerEmail, customerName, paymentMethod]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        customerEmail:
+          type: string
+        customerName:
+          type: string
+        paymentMethod:
+          type: string
+          enum: ["card", "paypal", "crypto"]
+        couponCode:
+          type: ["string", "null"]
+
+    OrderItemFull:
+      type: object
+      required: [productId, productName, quantity, unitPrice]
+      properties:
+        productId:
+          type: integer
+        productName:
+          type: string
+        quantity:
+          type: integer
+        unitPrice:
+          type: number
+        licenseKey:
+          type: ["string", "null"]
+
+    Order:
+      type: object
+      required: [id, customerEmail, customerName, items, total, status, createdAt, paymentMethod]
+      properties:
+        id:
+          type: integer
+        customerEmail:
+          type: string
+        customerName:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItemFull"
+        total:
+          type: number
+        discount:
+          type: ["number", "null"]
+        status:
+          type: string
+          enum: ["pending", "completed", "failed"]
+        paymentMethod:
+          type: string
+        createdAt:
+          type: string
