@@ -68,11 +68,11 @@ export default function CartPage() {
                   </div>
                   
                   <div className="col-span-1 md:col-span-2 text-center hidden md:block font-medium">
-                    €{item.product.price.toFixed(2)}
+                    €{(item.product.price ?? 0).toFixed(2)}
                   </div>
                   
                   <div className="col-span-1 md:col-span-2 flex justify-between md:justify-center items-center mt-4 md:mt-0">
-                    <div className="md:hidden font-medium">€{item.product.price.toFixed(2)}</div>
+                    <div className="md:hidden font-medium">€{(item.product.price ?? 0).toFixed(2)}</div>
                     <div className="flex items-center gap-1 bg-background rounded-md border border-border">
                       <Button variant="ghost" size="icon" className="h-8 w-8 rounded-none" onClick={() => updateQuantity(item.product.id, item.quantity - 1)}>
                         <Minus className="w-3 h-3" />

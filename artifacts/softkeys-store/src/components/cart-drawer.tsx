@@ -50,7 +50,7 @@ export function CartDrawer() {
                   </div>
                   <div className="flex-1 flex flex-col">
                     <h4 className="font-semibold line-clamp-1">{item.product.name}</h4>
-                    <span className="text-primary font-bold mt-auto">€{item.product.price.toFixed(2)}</span>
+                    <span className="text-primary font-bold mt-auto">€{(item.product.price ?? 0).toFixed(2)}</span>
                   </div>
                   <div className="flex flex-col justify-between items-end">
                     <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-destructive" onClick={() => removeItem(item.product.id)}>
@@ -76,7 +76,7 @@ export function CartDrawer() {
           <div className="border-t border-border pt-4 space-y-4">
             <div className="flex items-center justify-between font-bold text-lg">
               <span>Totale</span>
-              <span>€{total.toFixed(2)}</span>
+              <span>€{(total ?? 0).toFixed(2)}</span>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" className="w-full" onClick={() => {

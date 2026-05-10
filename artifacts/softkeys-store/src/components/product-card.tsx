@@ -71,11 +71,11 @@ export function ProductCard({ product }: { product: Product }) {
           <div className="flex flex-col">
             {product.originalPrice && (
               <span className="text-xs text-white/35 line-through">
-                €{product.originalPrice.toFixed(2)}
+                €{(product.originalPrice ?? 0).toFixed(2)}
               </span>
             )}
             <span className="text-xl font-extrabold text-white leading-none">
-              €{product.price.toFixed(2)}
+              €{(product.price ?? 0).toFixed(2)}
             </span>
             {product.type === "subscription" && product.subscriptionDuration && (
               <span className="text-[10px] text-white/40 mt-0.5">{product.subscriptionDuration}</span>
