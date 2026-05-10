@@ -12,6 +12,10 @@ import CategoryPage from "@/pages/category";
 import CartPage from "@/pages/cart";
 import CheckoutPage from "@/pages/checkout";
 import OrderConfirmationPage from "@/pages/order-confirmation";
+import HelpCenter from "@/pages/help-center";
+import ActivationGuides from "@/pages/activation-guides";
+import RefundPolicy from "@/pages/refund-policy";
+import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -27,6 +31,10 @@ function Router() {
         <Route path="/cart" component={CartPage} />
         <Route path="/checkout" component={CheckoutPage} />
         <Route path="/order-confirmation/:id" component={OrderConfirmationPage} />
+        <Route path="/help-center" component={HelpCenter} />
+        <Route path="/activation-guides" component={ActivationGuides} />
+        <Route path="/refund-policy" component={RefundPolicy} />
+        <Route path="/contact" component={Contact} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

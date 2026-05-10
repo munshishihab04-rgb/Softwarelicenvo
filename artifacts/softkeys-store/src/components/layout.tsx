@@ -165,8 +165,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Support</h3>
               <ul className="space-y-2.5 text-sm text-white/40">
-                {["Help Center", "Activation Guides", "Refund Policy", "Contact Us"].map((item) => (
-                  <li key={item}><span className="hover:text-white transition-colors cursor-pointer">{item}</span></li>
+                {[
+                  { label: "Help Center", href: "/help-center" },
+                  { label: "Activation Guides", href: "/activation-guides" },
+                  { label: "Refund Policy", href: "/refund-policy" },
+                  { label: "Contact Us", href: "/contact" },
+                ].map(({ label, href }) => (
+                  <li key={label}><Link href={href} className="hover:text-white transition-colors">{label}</Link></li>
                 ))}
               </ul>
             </div>
