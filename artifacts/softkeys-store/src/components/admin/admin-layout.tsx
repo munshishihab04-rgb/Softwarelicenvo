@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import {
   LayoutDashboard, Package, Tag, ShoppingCart, Settings,
-  LogOut, Zap, Menu, X,
+  LogOut, Zap, Menu, X, Key,
 } from "lucide-react";
 import { clearAdminToken } from "@/lib/admin-fetch";
 
@@ -11,6 +11,7 @@ const NAV = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: Tag },
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
+  { href: "/admin/keys", label: "License Keys", icon: Key },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 

@@ -21,6 +21,10 @@ export const productsTable = pgTable("products", {
   reviewCount: integer("review_count").notNull().default(0),
   imageUrl: text("image_url").notNull(),
   badge: text("badge"),
+  validity: text("validity"),
+  deliveryType: text("delivery_type").default("key"),
+  devices: integer("devices"),
+  warningText: text("warning_text"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

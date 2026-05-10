@@ -1,17 +1,7 @@
 import { Router, type IRouter } from "express";
-import { db, ordersTable, productsTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { db, ordersTable, productsTable, licenseKeysTable } from "@workspace/db";
+import { eq, and } from "drizzle-orm";
 import { sendOrderDeliveryEmail } from "../lib/email";
-
-const LICENSE_KEY_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-function generateLicenseKey(): string {
-  const segment = (len: number) =>
-    Array.from({ length: len }, () =>
-      LICENSE_KEY_CHARS[Math.floor(Math.random() * LICENSE_KEY_CHARS.length)]
-    ).join("");
-  return `${segment(5)}-${segment(5)}-${segment(5)}-${segment(5)}`;
-}
 
 const router: IRouter = Router();
 
@@ -36,6 +26,7 @@ router.post("/orders", async (req, res): Promise<void> => {
   }> = [];
 
   let total = 0;
+  let hasMissingKey = false;
 
   for (const item of items) {
     const [product] = await db
@@ -51,12 +42,30 @@ router.post("/orders", async (req, res): Promise<void> => {
     const unitPrice = parseFloat(product.price);
     const quantity = item.quantity ?? 1;
 
+    // Try to assign an available key from inventory for each unit
+    let assignedKey: string | null = null;
+    const [availableKey] = await db
+      .select()
+      .from(licenseKeysTable)
+      .where(and(
+        eq(licenseKeysTable.productId, product.id),
+        eq(licenseKeysTable.isUsed, false)
+      ))
+      .limit(1);
+
+    if (availableKey) {
+      assignedKey = availableKey.keyValue;
+      // Mark as used (will update after order is created)
+    } else {
+      hasMissingKey = true;
+    }
+
     orderItems.push({
       productId: product.id,
       productName: product.name,
       quantity,
       unitPrice,
-      licenseKey: generateLicenseKey(),
+      licenseKey: assignedKey,
     });
 
     total += unitPrice * quantity;
@@ -68,6 +77,8 @@ router.post("/orders", async (req, res): Promise<void> => {
     total = total - discount;
   }
 
+  const orderStatus = hasMissingKey ? "pending_key" : "completed";
+
   const [order] = await db
     .insert(ordersTable)
     .values({
@@ -76,21 +87,36 @@ router.post("/orders", async (req, res): Promise<void> => {
       items: orderItems,
       total: total.toFixed(2),
       discount: discount ? discount.toFixed(2) : null,
-      status: "completed",
+      status: orderStatus,
       paymentMethod,
     })
     .returning();
 
-  // Fire-and-forget: send delivery email (does not block the response)
-  void sendOrderDeliveryEmail({
-    orderId: order.id,
-    customerName,
-    customerEmail,
-    items: orderItems,
-    total,
-    discount,
-    paymentMethod,
-  });
+  // Mark assigned inventory keys as used
+  for (const orderItem of orderItems) {
+    if (orderItem.licenseKey) {
+      await db
+        .update(licenseKeysTable)
+        .set({ isUsed: true, orderId: order.id, assignedAt: new Date() })
+        .where(and(
+          eq(licenseKeysTable.productId, orderItem.productId),
+          eq(licenseKeysTable.keyValue, orderItem.licenseKey)
+        ));
+    }
+  }
+
+  // Fire-and-forget delivery email (only if order is complete)
+  if (orderStatus === "completed") {
+    void sendOrderDeliveryEmail({
+      orderId: order.id,
+      customerName,
+      customerEmail,
+      items: orderItems,
+      total,
+      discount,
+      paymentMethod,
+    });
+  }
 
   res.status(201).json({
     ...order,

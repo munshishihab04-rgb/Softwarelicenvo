@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { Package, Tag, ShoppingCart, TrendingUp, Loader2 } from "lucide-react";
+import { Package, Tag, ShoppingCart, TrendingUp, Loader2, CalendarDays, DollarSign } from "lucide-react";
 import { AdminLayout } from "@/components/admin/admin-layout";
 import { adminFetch, isAdminAuthenticated } from "@/lib/admin-fetch";
 
@@ -9,6 +9,8 @@ interface Stats {
   categories: number;
   orders: number;
   revenue: number;
+  ordersToday: number;
+  revenueToday: number;
 }
 
 export default function AdminDashboard() {
@@ -30,9 +32,16 @@ export default function AdminDashboard() {
       ]);
       const products = await productsRes.json() as unknown[];
       const categories = await categoriesRes.json() as unknown[];
-      const orders = await ordersRes.json() as Array<{ total: number }>;
+      const orders = await ordersRes.json() as Array<{ total: number; createdAt: string }>;
       const revenue = orders.reduce((sum, o) => sum + o.total, 0);
-      setStats({ products: products.length, categories: categories.length, orders: orders.length, revenue });
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const todayOrders = orders.filter((o) => new Date(o.createdAt) >= today);
+      const ordersToday = todayOrders.length;
+      const revenueToday = todayOrders.reduce((sum, o) => sum + o.total, 0);
+
+      setStats({ products: products.length, categories: categories.length, orders: orders.length, revenue, ordersToday, revenueToday });
     } finally {
       setLoading(false);
     }
@@ -41,8 +50,10 @@ export default function AdminDashboard() {
   const cards = [
     { label: "Total Products", value: stats?.products ?? 0, icon: Package, color: "text-sky-400", bg: "bg-sky-400/10" },
     { label: "Categories", value: stats?.categories ?? 0, icon: Tag, color: "text-violet-400", bg: "bg-violet-400/10" },
-    { label: "Orders", value: stats?.orders ?? 0, icon: ShoppingCart, color: "text-emerald-400", bg: "bg-emerald-400/10" },
-    { label: "Revenue", value: stats ? `€${stats.revenue.toFixed(2)}` : "€0.00", icon: TrendingUp, color: "text-[#c6f135]", bg: "bg-[#c6f135]/10" },
+    { label: "Total Orders", value: stats?.orders ?? 0, icon: ShoppingCart, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+    { label: "Total Revenue", value: stats ? `€${stats.revenue.toFixed(2)}` : "€0.00", icon: TrendingUp, color: "text-[#c6f135]", bg: "bg-[#c6f135]/10" },
+    { label: "Orders Today", value: stats?.ordersToday ?? 0, icon: CalendarDays, color: "text-orange-400", bg: "bg-orange-400/10" },
+    { label: "Revenue Today", value: stats ? `€${stats.revenueToday.toFixed(2)}` : "€0.00", icon: DollarSign, color: "text-pink-400", bg: "bg-pink-400/10" },
   ];
 
   return (
@@ -58,7 +69,7 @@ export default function AdminDashboard() {
             <Loader2 className="w-6 h-6 animate-spin text-white/30" />
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
             {cards.map(({ label, value, icon: Icon, color, bg }) => (
               <div key={label} className="bg-white/4 border border-white/8 rounded-xl p-5">
                 <div className={`w-10 h-10 rounded-lg ${bg} flex items-center justify-center mb-4`}>

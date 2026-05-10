@@ -24,6 +24,7 @@ import AdminProducts from "@/pages/admin/products";
 import AdminCategories from "@/pages/admin/categories";
 import AdminOrders from "@/pages/admin/orders";
 import AdminSettings from "@/pages/admin/settings";
+import AdminKeys from "@/pages/admin/keys";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/admin/products" component={AdminProducts} />
       <Route path="/admin/categories" component={AdminCategories} />
       <Route path="/admin/orders" component={AdminOrders} />
+      <Route path="/admin/keys" component={AdminKeys} />
       <Route path="/admin/settings" component={AdminSettings} />
       <Route path="/admin" component={AdminDashboard} />
 

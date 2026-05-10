@@ -22,7 +22,7 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
   const {
     name, slug, description, price, originalPrice, categoryId, categoryName,
     type, subscriptionDuration, platform, inStock, featured, onSale,
-    rating, reviewCount, imageUrl, badge,
+    rating, reviewCount, imageUrl, badge, validity, deliveryType, devices, warningText,
   } = body;
 
   if (!name || !slug || !description || !price || !categoryId || !categoryName || !imageUrl) {
@@ -50,6 +50,10 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
       reviewCount: Number(reviewCount ?? 0),
       imageUrl: String(imageUrl),
       badge: badge ? String(badge) : null,
+      validity: validity ? String(validity) : null,
+      deliveryType: deliveryType ? String(deliveryType) : "key",
+      devices: devices ? Number(devices) : null,
+      warningText: warningText ? String(warningText) : null,
     })
     .returning();
 
@@ -86,6 +90,10 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
   if (body.reviewCount !== undefined) update.reviewCount = Number(body.reviewCount);
   if (body.imageUrl !== undefined) update.imageUrl = String(body.imageUrl);
   if (body.badge !== undefined) update.badge = body.badge ? String(body.badge) : null;
+  if (body.validity !== undefined) update.validity = body.validity ? String(body.validity) : null;
+  if (body.deliveryType !== undefined) update.deliveryType = body.deliveryType ? String(body.deliveryType) : "key";
+  if (body.devices !== undefined) update.devices = body.devices ? Number(body.devices) : null;
+  if (body.warningText !== undefined) update.warningText = body.warningText ? String(body.warningText) : null;
 
   const [product] = await db
     .update(productsTable)
