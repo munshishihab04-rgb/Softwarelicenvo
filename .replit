@@ -33,3 +33,9 @@ externalPort = 8081
 [[ports]]
 localPort = 24346
 externalPort = 3000
+
+[userenv]
+
+[userenv.shared]
+ADMIN_PASSWORD = "changeme"
+ADMIN_JWT_SECRET = "b230677c0c288d30dea1b2751a583046e3cc8f3824f5fe67f665615d97509c5f"

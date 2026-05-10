@@ -48,6 +48,15 @@ A full e-commerce marketplace for digital software license keys and subscription
 - Checkout: customer info form, payment method selector (card/paypal/crypto), order summary
 - Order confirmation: success page showing delivered license keys
 
+## Admin Panel
+
+- Admin login: `/admin/login` — password from `ADMIN_PASSWORD` env var (default: `changeme`)
+- JWT stored in sessionStorage, 24h expiry, secret from `ADMIN_JWT_SECRET` env var
+- Admin routes: `/admin`, `/admin/products`, `/admin/categories`, `/admin/orders`, `/admin/settings`
+- All admin API routes at `/api/admin/*` require `Authorization: Bearer <token>` header
+- Settings stored in `settings` table (key-value): site_name, contact_email, smtp_host, smtp_port, smtp_user, smtp_pass
+- SMTP password is masked in the settings UI
+
 ## User preferences
 
 _Populate as you build — explicit user instructions worth remembering across sessions._

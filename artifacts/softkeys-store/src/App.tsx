@@ -18,26 +18,46 @@ import RefundPolicy from "@/pages/refund-policy";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 
+import AdminLogin from "@/pages/admin/login";
+import AdminDashboard from "@/pages/admin/dashboard";
+import AdminProducts from "@/pages/admin/products";
+import AdminCategories from "@/pages/admin/categories";
+import AdminOrders from "@/pages/admin/orders";
+import AdminSettings from "@/pages/admin/settings";
+
 const queryClient = new QueryClient();
 
 function Router() {
   return (
-    <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/products" component={Products} />
-        <Route path="/products/:id" component={ProductDetail} />
-        <Route path="/category/:slug" component={CategoryPage} />
-        <Route path="/cart" component={CartPage} />
-        <Route path="/checkout" component={CheckoutPage} />
-        <Route path="/order-confirmation/:id" component={OrderConfirmationPage} />
-        <Route path="/help-center" component={HelpCenter} />
-        <Route path="/activation-guides" component={ActivationGuides} />
-        <Route path="/refund-policy" component={RefundPolicy} />
-        <Route path="/contact" component={Contact} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
+    <Switch>
+      {/* Admin routes — no public Layout */}
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/products" component={AdminProducts} />
+      <Route path="/admin/categories" component={AdminCategories} />
+      <Route path="/admin/orders" component={AdminOrders} />
+      <Route path="/admin/settings" component={AdminSettings} />
+      <Route path="/admin" component={AdminDashboard} />
+
+      {/* Public store routes — wrapped in Layout */}
+      <Route>
+        <Layout>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/products" component={Products} />
+            <Route path="/products/:id" component={ProductDetail} />
+            <Route path="/category/:slug" component={CategoryPage} />
+            <Route path="/cart" component={CartPage} />
+            <Route path="/checkout" component={CheckoutPage} />
+            <Route path="/order-confirmation/:id" component={OrderConfirmationPage} />
+            <Route path="/help-center" component={HelpCenter} />
+            <Route path="/activation-guides" component={ActivationGuides} />
+            <Route path="/refund-policy" component={RefundPolicy} />
+            <Route path="/contact" component={Contact} />
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
+      </Route>
+    </Switch>
   );
 }
 
