@@ -2,6 +2,15 @@ import { Router, type IRouter } from "express";
 import { db, ordersTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import { requireAdmin } from "../../lib/auth";
+import { sendOrderDeliveryEmail } from "../../lib/email";
+
+interface OrderItem {
+  productId: number;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  licenseKey: string | null;
+}
 
 const router: IRouter = Router();
 
@@ -37,6 +46,35 @@ router.put("/admin/orders/:id", requireAdmin, async (req, res): Promise<void> =>
     total: parseFloat(order.total),
     discount: order.discount ? parseFloat(order.discount) : null,
   });
+});
+
+// Manual delivery: resend keys email for a given order
+router.post("/admin/orders/:id/deliver", requireAdmin, async (req, res): Promise<void> => {
+  const raw = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const id = parseInt(raw, 10);
+  if (isNaN(id)) { res.status(400).json({ error: "Invalid ID" }); return; }
+
+  const [order] = await db.select().from(ordersTable).where(eq(ordersTable.id, id));
+  if (!order) { res.status(404).json({ error: "Order not found" }); return; }
+
+  const items = (order.items as OrderItem[]) ?? [];
+
+  const result = await sendOrderDeliveryEmail({
+    orderId: order.id,
+    customerName: order.customerName,
+    customerEmail: order.customerEmail,
+    items,
+    total: parseFloat(order.total),
+    discount: order.discount ? parseFloat(order.discount) : null,
+    paymentMethod: order.paymentMethod,
+  });
+
+  if (!result.sent) {
+    res.status(500).json({ error: result.error ?? "Failed to send email" });
+    return;
+  }
+
+  res.json({ success: true, message: `Delivery email sent to ${order.customerEmail}` });
 });
 
 export default router;

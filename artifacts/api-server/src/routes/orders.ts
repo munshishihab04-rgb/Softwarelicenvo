@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import { db, ordersTable, productsTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { sendOrderDeliveryEmail } from "../lib/email";
 
 const LICENSE_KEY_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -79,6 +80,17 @@ router.post("/orders", async (req, res): Promise<void> => {
       paymentMethod,
     })
     .returning();
+
+  // Fire-and-forget: send delivery email (does not block the response)
+  void sendOrderDeliveryEmail({
+    orderId: order.id,
+    customerName,
+    customerEmail,
+    items: orderItems,
+    total,
+    discount,
+    paymentMethod,
+  });
 
   res.status(201).json({
     ...order,
